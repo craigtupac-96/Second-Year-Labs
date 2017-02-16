@@ -25,7 +25,7 @@ public class Calculator implements ActionListener{
 	String textfield = "";
 	String tempNumber = "";
 	int sum;            // for the sum of calculations
-	int ans;            // to store the sum after calculation for reuse
+	double ans;            // to store the sum after calculation for reuse
 	ArrayList numbers = new ArrayList();
 	ArrayList operators = new ArrayList();
 	// Constructor
@@ -254,13 +254,16 @@ public class Calculator implements ActionListener{
 				System.out.println(numbers + "\t" + operators);
 				textfield = "Answer will be here";
 				text.setText(textfield);
-				String test = "";
+				String expression = "";
 				for(int index = 0; index < operators.size(); index++){
-					test += operators.get(index);
+					expression += operators.get(index);
 				}
-				System.out.println(test);
+				System.out.println(expression);          // for testing purposes
 				try {
-					System.out.println(calculation(test));
+					String ans = calculation(expression);
+					Double test = Double.parseDouble(ans);;
+					System.out.println(test);
+					textfield = ans;               
 				} catch (ScriptException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -274,10 +277,20 @@ public class Calculator implements ActionListener{
 		}
 	} // end actionPerformed
 	
-	public double calculation(String input) throws ScriptException {
-	    ScriptEngineManager mgr = new ScriptEngineManager();    
+	public String calculation(String input) throws ScriptException {
+		ScriptEngine engine = new ScriptEngineManager().getEngineByExtension("js");
+		Object result = engine.eval(input);
+		String strAnswer = result.toString();            // holds the string representation of the object
+		System.out.println(strAnswer);// + "\n" + intAnswer + "\n" + dAnswer);
+		
+		return strAnswer;
+		 
+		 
+		 
+		 
+		/*ScriptEngineManager mgr = new ScriptEngineManager();             // Didnt work  
 	    ScriptEngine engine = mgr.getEngineByName("JavaScript");        
-	    return ((Double) engine.eval(input));
+	    return ((Double) engine.eval(input));*/
 	    //return new BigDecimal(engine.eval(input).toString()).intValueExact();
 	}
 }
@@ -288,4 +301,5 @@ public class Calculator implements ActionListener{
  * parse int string to suit
  * if statement to change operators
  * using 2 arraylists
+ * Try beanshell
  */
