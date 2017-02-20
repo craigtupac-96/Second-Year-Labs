@@ -4,10 +4,10 @@
  */
 package Lab14;
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.math.BigDecimal;
 import java.util.ArrayList;
 
 import javax.script.ScriptEngine;
@@ -21,7 +21,7 @@ import javax.swing.JTextField;
 public class Calculator implements ActionListener{
 	JTextField text = new JTextField();
 	JButton one, two, three, four, five, six, seven, eight, nine, zero,  
-		dot, mult, div, plus, minus, equals, clear, answer;
+		dot, mult, div, plus, minus, equals, clear, memory, answer;
 	String textfield = "";
 	String tempNumber = "";
 	int sum;            // for the sum of calculations
@@ -31,80 +31,154 @@ public class Calculator implements ActionListener{
 	// Constructor
 	public Calculator(){
 		JFrame frame = new JFrame("Calculator");
-		numbers.add(0, null);
-	
-		JPanel numberPanel = new JPanel();
-		numberPanel.setLayout(new GridLayout(3, 3));
+		numbers.add(0, null);                       // initializing the arraylist
+		
+		// Textfield
+		text.setBounds(10, 11, 284, 34);
+		text.setForeground(Color.GREEN);
+		text.setBackground(Color.DARK_GRAY);
+		frame.getContentPane().add(text);
+		text.setColumns(10);
+		
+		// Number Buttons
 		seven = new JButton("7");
+		seven.setForeground(Color.GREEN);
+		seven.setBackground(Color.DARK_GRAY);
+		seven.setBounds(75, 106, 45, 45);
+		frame.getContentPane().add(seven);
 		seven.addActionListener(this);
+		
 		eight = new JButton("8");
+		eight.setForeground(Color.GREEN);
+		eight.setBackground(Color.DARK_GRAY);
+		eight.setBounds(130, 106, 45, 45);
+		frame.getContentPane().add(eight);
 		eight.addActionListener(this);
+		
 		nine = new JButton("9");
+		nine.setForeground(Color.GREEN);
+		nine.setBackground(Color.DARK_GRAY);
+		nine.setBounds(185, 106, 45, 45);
+		frame.getContentPane().add(nine);
 		nine.addActionListener(this);
+		
 		four = new JButton("4");
+		four.setForeground(Color.GREEN);
+		four.setBackground(Color.DARK_GRAY);
+		four.setBounds(75, 162, 45, 45);
+		frame.getContentPane().add(four);
 		four.addActionListener(this);
+		
 		five = new JButton("5");
+		five.setForeground(Color.GREEN);
+		five.setBackground(Color.DARK_GRAY);
+		five.setBounds(130, 162, 45, 45);
+		frame.getContentPane().add(five);
 		five.addActionListener(this);
+		
 		six = new JButton("6");
+		six.setForeground(Color.GREEN);
+		six.setBackground(Color.DARK_GRAY);
+		six.setBounds(185, 162, 45, 45);
+		frame.getContentPane().add(six);
 		six.addActionListener(this);
+		
 		one = new JButton("1");
+		one.setForeground(Color.GREEN);
+		one.setBackground(Color.DARK_GRAY);
+		one.setBounds(75, 218, 45, 45);
+		frame.getContentPane().add(one);
 		one.addActionListener(this);
+		
 		two = new JButton("2");
+		two.setForeground(Color.GREEN);
+		two.setBackground(Color.DARK_GRAY);
+		two.setBounds(130, 218, 45, 45);
+		frame.getContentPane().add(two);
 		two.addActionListener(this);
+		
 		three = new JButton("3");
+		three.setForeground(Color.GREEN);
+		three.setBackground(Color.DARK_GRAY);
+		three.setBounds(185, 218, 45, 45);
+		frame.getContentPane().add(three);
 		three.addActionListener(this);
-		numberPanel.add(seven);
-		numberPanel.add(eight);
-		numberPanel.add(nine);
-		numberPanel.add(four);
-		numberPanel.add(five);
-		numberPanel.add(six);
-		numberPanel.add(one);
-		numberPanel.add(two);
-		numberPanel.add(three);
-		
-		JPanel rightPanel = new JPanel();
-		rightPanel.setLayout(new GridLayout(4, 1));
-		mult = new JButton("*");
-		mult.addActionListener(this);
-		div = new JButton("/");
-		div.addActionListener(this);
-		plus = new JButton("+");
-		plus.addActionListener(this);
-		minus = new JButton("-");
-		minus.addActionListener(this);
-		rightPanel.add(mult);
-		rightPanel.add(div);
-		rightPanel.add(plus);
-		rightPanel.add(minus);
-		
-		JPanel leftPanel = new JPanel();
-		leftPanel.setLayout(new GridLayout(2, 1));
-		clear = new JButton("C");
-		clear.addActionListener(this);
-		answer = new JButton("ANS");
-		answer.addActionListener(this);
-		leftPanel.add(clear);
-		leftPanel.add(answer);
-		
-		JPanel bottomPanel = new JPanel();
-		bottomPanel.setLayout(new GridLayout(1, 3));
-		zero = new JButton("0");
-		zero.addActionListener(this);
-		equals = new JButton("=");
-		equals.addActionListener(this);
-		bottomPanel.add(zero);
-		bottomPanel.add(new JButton(".")); // add later
-		bottomPanel.add(equals);
 
-		frame.setLayout(new BorderLayout());
-		frame.add(text, BorderLayout.NORTH);
-		frame.add(bottomPanel, BorderLayout.SOUTH);
-		frame.add(numberPanel, BorderLayout.CENTER);
-		frame.add(rightPanel,  BorderLayout.EAST);
-		frame.add(leftPanel,  BorderLayout.WEST);
-		frame.setSize(320, 400);
+		// Operators
+		div = new JButton("/");
+		div.setForeground(Color.GREEN);
+		div.setBackground(Color.DARK_GRAY);
+		div.setBounds(240, 106, 45, 45);
+		frame.getContentPane().add(div);
+		div.addActionListener(this);
+		
+		mult = new JButton("*");
+		mult.setForeground(Color.GREEN);
+		mult.setBackground(Color.DARK_GRAY);
+		mult.setBounds(240, 162, 45, 45);
+		frame.getContentPane().add(mult);
+		mult.addActionListener(this);
+		
+		minus = new JButton("-");
+		minus.setForeground(Color.GREEN);
+		minus.setBackground(Color.DARK_GRAY);
+		minus.setBounds(240, 218, 45, 45);
+		frame.getContentPane().add(minus);
+		minus.addActionListener(this);
+		
+		plus = new JButton("+");
+		plus.setForeground(Color.GREEN);
+		plus.setBackground(Color.DARK_GRAY);
+		plus.setBounds(240, 274, 45, 45);
+		frame.getContentPane().add(plus);
+		plus.addActionListener(this);
+
+		// Extra Buttons
+		equals = new JButton("=");
+		equals.setForeground(Color.GREEN);
+		equals.setBackground(Color.DARK_GRAY);
+		equals.setBounds(185, 274, 45, 45);
+		frame.getContentPane().add(equals);
+		equals.addActionListener(this);
+		
+		dot = new JButton(".");
+		dot.setForeground(Color.GREEN);
+		dot.setBackground(Color.DARK_GRAY);
+		dot.setBounds(130, 274, 45, 45);
+		frame.getContentPane().add(dot);
+		
+		zero = new JButton("0");
+		zero.setForeground(Color.GREEN);
+		zero.setBackground(Color.DARK_GRAY);
+		zero.setBounds(75, 274, 45, 45);
+		frame.getContentPane().add(zero);
+		zero.addActionListener(this);
+		
+		clear = new JButton("C");
+		clear.setForeground(Color.GREEN);
+		clear.setBackground(Color.DARK_GRAY);
+		clear.setBounds(20, 106, 45, 45);
+		frame.getContentPane().add(clear);
+		clear.addActionListener(this);
+		
+		memory = new JButton("Memory");
+		memory.setForeground(Color.GREEN);
+		memory.setBackground(Color.DARK_GRAY);
+		memory.setBounds(20, 67, 85, 28);
+		frame.getContentPane().add(memory);
+		
+		answer = new JButton("Answer");
+		answer.setForeground(Color.GREEN);
+		answer.setBackground(Color.DARK_GRAY);
+		answer.setBounds(115, 67, 85, 28);
+		frame.getContentPane().add(answer);
+		answer.addActionListener(this);
+		
+		
+		frame.setBounds(100, 100, 320, 400);
+		frame.getContentPane().setBackground(Color.BLACK);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.getContentPane().setLayout(null);
 		frame.setVisible(true);
 	}
 	
@@ -264,8 +338,7 @@ public class Calculator implements ActionListener{
 					Double test = Double.parseDouble(ans);;
 					System.out.println(test);
 					textfield = ans;               
-				} catch (ScriptException e) {
-					// TODO Auto-generated catch block
+				} catch (ScriptException e){
 					e.printStackTrace();
 				}
 				// Reset everything
