@@ -3,9 +3,7 @@
  * C00184465
  */
 package Lab14;
-import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -15,26 +13,27 @@ import javax.script.ScriptEngineManager;
 import javax.script.ScriptException;
 import javax.swing.JButton;
 import javax.swing.JFrame;
-import javax.swing.JPanel;
+import javax.swing.JLabel;
 import javax.swing.JTextField;
 
 public class Calculator implements ActionListener{
 	JTextField text = new JTextField();
+	JTextField mem = new JTextField();
 	JButton one, two, three, four, five, six, seven, eight, nine, zero,  
-		dot, mult, div, plus, minus, equals, clear, memory, answer;
+		dot, mult, div, plus, minus, equals, clear, memory, mClear, mPlus, mMin, mMult, mDiv;
 	String textfield = "";
 	String tempNumber = "";
-	int sum;            // for the sum of calculations
-	double ans;            // to store the sum after calculation for reuse
-	ArrayList numbers = new ArrayList();
-	ArrayList operators = new ArrayList();
+	String answerString = "";         // to contain the answer
+	String memoryNum = "";
+	ArrayList<String> numbers = new ArrayList<String>();
+	ArrayList<String> operators = new ArrayList<String>();
 	// Constructor
 	public Calculator(){
 		JFrame frame = new JFrame("Calculator");
 		numbers.add(0, null);                       // initializing the arraylist
 		
 		// Textfield
-		text.setBounds(10, 11, 284, 34);
+		text.setBounds(11, 11, 284, 45);
 		text.setForeground(Color.GREEN);
 		text.setBackground(Color.DARK_GRAY);
 		frame.getContentPane().add(text);
@@ -44,63 +43,63 @@ public class Calculator implements ActionListener{
 		seven = new JButton("7");
 		seven.setForeground(Color.GREEN);
 		seven.setBackground(Color.DARK_GRAY);
-		seven.setBounds(75, 106, 45, 45);
+		seven.setBounds(68, 121, 52, 45);
 		frame.getContentPane().add(seven);
 		seven.addActionListener(this);
 		
 		eight = new JButton("8");
 		eight.setForeground(Color.GREEN);
 		eight.setBackground(Color.DARK_GRAY);
-		eight.setBounds(130, 106, 45, 45);
+		eight.setBounds(125, 121, 52, 45);
 		frame.getContentPane().add(eight);
 		eight.addActionListener(this);
 		
 		nine = new JButton("9");
 		nine.setForeground(Color.GREEN);
 		nine.setBackground(Color.DARK_GRAY);
-		nine.setBounds(185, 106, 45, 45);
+		nine.setBounds(182, 121, 52, 45);
 		frame.getContentPane().add(nine);
 		nine.addActionListener(this);
 		
 		four = new JButton("4");
 		four.setForeground(Color.GREEN);
 		four.setBackground(Color.DARK_GRAY);
-		four.setBounds(75, 162, 45, 45);
+		four.setBounds(68, 177, 52, 45);
 		frame.getContentPane().add(four);
 		four.addActionListener(this);
 		
 		five = new JButton("5");
 		five.setForeground(Color.GREEN);
 		five.setBackground(Color.DARK_GRAY);
-		five.setBounds(130, 162, 45, 45);
+		five.setBounds(125, 177, 52, 45);
 		frame.getContentPane().add(five);
 		five.addActionListener(this);
 		
 		six = new JButton("6");
 		six.setForeground(Color.GREEN);
 		six.setBackground(Color.DARK_GRAY);
-		six.setBounds(185, 162, 45, 45);
+		six.setBounds(182, 177, 52, 45);
 		frame.getContentPane().add(six);
 		six.addActionListener(this);
 		
 		one = new JButton("1");
 		one.setForeground(Color.GREEN);
 		one.setBackground(Color.DARK_GRAY);
-		one.setBounds(75, 218, 45, 45);
+		one.setBounds(68, 233, 52, 45);
 		frame.getContentPane().add(one);
 		one.addActionListener(this);
 		
 		two = new JButton("2");
 		two.setForeground(Color.GREEN);
 		two.setBackground(Color.DARK_GRAY);
-		two.setBounds(130, 218, 45, 45);
+		two.setBounds(125, 233, 52, 45);
 		frame.getContentPane().add(two);
 		two.addActionListener(this);
 		
 		three = new JButton("3");
 		three.setForeground(Color.GREEN);
 		three.setBackground(Color.DARK_GRAY);
-		three.setBounds(185, 218, 45, 45);
+		three.setBounds(182, 233, 52, 45);
 		frame.getContentPane().add(three);
 		three.addActionListener(this);
 
@@ -108,28 +107,28 @@ public class Calculator implements ActionListener{
 		div = new JButton("/");
 		div.setForeground(Color.GREEN);
 		div.setBackground(Color.DARK_GRAY);
-		div.setBounds(240, 106, 45, 45);
+		div.setBounds(239, 121, 52, 45);
 		frame.getContentPane().add(div);
 		div.addActionListener(this);
 		
 		mult = new JButton("*");
 		mult.setForeground(Color.GREEN);
 		mult.setBackground(Color.DARK_GRAY);
-		mult.setBounds(240, 162, 45, 45);
+		mult.setBounds(239, 177, 52, 45);
 		frame.getContentPane().add(mult);
 		mult.addActionListener(this);
 		
 		minus = new JButton("-");
 		minus.setForeground(Color.GREEN);
 		minus.setBackground(Color.DARK_GRAY);
-		minus.setBounds(240, 218, 45, 45);
+		minus.setBounds(239, 233, 52, 45);
 		frame.getContentPane().add(minus);
 		minus.addActionListener(this);
 		
 		plus = new JButton("+");
 		plus.setForeground(Color.GREEN);
 		plus.setBackground(Color.DARK_GRAY);
-		plus.setBounds(240, 274, 45, 45);
+		plus.setBounds(239, 289, 52, 45);
 		frame.getContentPane().add(plus);
 		plus.addActionListener(this);
 
@@ -137,43 +136,83 @@ public class Calculator implements ActionListener{
 		equals = new JButton("=");
 		equals.setForeground(Color.GREEN);
 		equals.setBackground(Color.DARK_GRAY);
-		equals.setBounds(185, 274, 45, 45);
+		equals.setBounds(182, 289, 52, 45);
 		frame.getContentPane().add(equals);
 		equals.addActionListener(this);
 		
 		dot = new JButton(".");
 		dot.setForeground(Color.GREEN);
 		dot.setBackground(Color.DARK_GRAY);
-		dot.setBounds(130, 274, 45, 45);
+		dot.setBounds(125, 289, 52, 45);
 		frame.getContentPane().add(dot);
 		
 		zero = new JButton("0");
 		zero.setForeground(Color.GREEN);
 		zero.setBackground(Color.DARK_GRAY);
-		zero.setBounds(75, 274, 45, 45);
+		zero.setBounds(68, 289, 52, 45);
 		frame.getContentPane().add(zero);
 		zero.addActionListener(this);
 		
 		clear = new JButton("C");
 		clear.setForeground(Color.GREEN);
 		clear.setBackground(Color.DARK_GRAY);
-		clear.setBounds(20, 106, 45, 45);
+		clear.setBounds(11, 121, 52, 45);
 		frame.getContentPane().add(clear);
 		clear.addActionListener(this);
 		
-		memory = new JButton("Memory");
+		memory = new JButton("M");
 		memory.setForeground(Color.GREEN);
 		memory.setBackground(Color.DARK_GRAY);
-		memory.setBounds(20, 67, 85, 28);
+		memory.setBounds(11, 85, 52, 25);
 		frame.getContentPane().add(memory);
+		memory.addActionListener(this);
 		
-		answer = new JButton("Answer");
-		answer.setForeground(Color.GREEN);
-		answer.setBackground(Color.DARK_GRAY);
-		answer.setBounds(115, 67, 85, 28);
-		frame.getContentPane().add(answer);
-		answer.addActionListener(this);
+		mClear = new JButton("Mc");
+		mClear.setForeground(Color.GREEN);
+		mClear.setBackground(Color.DARK_GRAY);
+		mClear.setBounds(11, 177, 52, 25);
+		frame.getContentPane().add(mClear);
+		mClear.addActionListener(this);
 		
+		mPlus = new JButton("M+");
+		mPlus.setForeground(Color.GREEN);
+		mPlus.setBackground(Color.DARK_GRAY);
+		mPlus.setBounds(68, 85, 52, 25);
+		frame.getContentPane().add(mPlus);
+		mPlus.addActionListener(this);
+		
+		mMin = new JButton("M-");
+		mMin.setForeground(Color.GREEN);
+		mMin.setBackground(Color.DARK_GRAY);
+		mMin.setBounds(125, 85, 52, 25);
+		frame.getContentPane().add(mMin);
+		mMin.addActionListener(this);
+		
+		mMult = new JButton("M*");
+		mMult.setForeground(Color.GREEN);
+		mMult.setBackground(Color.DARK_GRAY);
+		mMult.setBounds(181, 85, 52, 25);
+		frame.getContentPane().add(mMult);
+		mMult.addActionListener(this);
+		
+		mDiv = new JButton("M/");
+		mDiv.setForeground(Color.GREEN);
+		mDiv.setBackground(Color.DARK_GRAY);
+		mDiv.setBounds(239, 85, 52, 25);
+		frame.getContentPane().add(mDiv);
+		mDiv.addActionListener(this);
+		
+		// Memory textfield
+		mem.setForeground(Color.GREEN);
+		mem.setBackground(Color.DARK_GRAY);
+		mem.setBounds(11, 318, 47, 20);
+		frame.getContentPane().add(mem);
+		mem.setColumns(10);
+		
+		JLabel label = new JLabel("Memory");
+		label.setForeground(Color.GREEN);
+		label.setBounds(11, 304, 47, 14);
+		frame.getContentPane().add(label);
 		
 		frame.setBounds(100, 100, 320, 400);
 		frame.getContentPane().setBackground(Color.BLACK);
@@ -319,14 +358,100 @@ public class Calculator implements ActionListener{
 				tempNumber = "";
 			}
 		}
+		else if(event.getSource() == memory && tempNumber != "" && memoryNum == ""){    // The memory button
+				textfield = "";
+				text.setText(textfield);
+				memoryNum = tempNumber;
+				tempNumber = "";
+				mem.setText(memoryNum);
+		}
+		else if(event.getSource() == mClear){         // Clear the memory
+				memoryNum = "";
+				mem.setText("");
+		}
+		else if(event.getSource() == mPlus &&  memoryNum != ""){                        // memory plus 
+			if(numbers.get(0) == null){               // .get used to retrieve index
+				numbers.remove(0);
+				numbers.add(0, memoryNum);
+				textfield += memoryNum + "+";
+				text.setText(textfield);
+				operators.add(0, memoryNum);
+				operators.add("+");
+				tempNumber = "";
+			}
+			else{
+				numbers.add(memoryNum);
+				textfield += memoryNum + "+";
+				text.setText(textfield);
+				operators.add(memoryNum);
+				operators.add("+");
+				tempNumber = "";
+			}
+		}
+		else if(event.getSource() == mMin &&  memoryNum != ""){                        // memory minus
+			if(numbers.get(0) == null){               // .get used to retrieve index
+				numbers.remove(0);
+				numbers.add(0, memoryNum);
+				textfield += memoryNum + "-";
+				text.setText(textfield);
+				operators.add(0, memoryNum);
+				operators.add("-");
+				tempNumber = "";
+			}
+			else{
+				numbers.add(memoryNum);
+				textfield += memoryNum + "-";
+				text.setText(textfield);
+				operators.add(memoryNum);
+				operators.add("-");
+				tempNumber = "";
+			}
+		}
+		else if(event.getSource() == mMult &&  memoryNum != ""){                        // memory mult
+			if(numbers.get(0) == null){               // .get used to retrieve index
+				numbers.remove(0);
+				numbers.add(0, memoryNum);
+				textfield += memoryNum + "*";
+				text.setText(textfield);
+				operators.add(0, memoryNum);
+				operators.add("*");
+				tempNumber = "";
+			}
+			else{
+				numbers.add(memoryNum);
+				textfield += memoryNum + "*";
+				text.setText(textfield);
+				operators.add(memoryNum);
+				operators.add("*");
+				tempNumber = "";
+			}
+		}
+		else if(event.getSource() == mDiv &&  memoryNum != ""){                        // memory divide
+			if(numbers.get(0) == null){               // .get used to retrieve index
+				numbers.remove(0);
+				numbers.add(0, memoryNum);
+				textfield += memoryNum + "/";
+				text.setText(textfield);
+				operators.add(0, memoryNum);
+				operators.add("/");
+				tempNumber = "";
+			}
+			else{
+				numbers.add(memoryNum);
+				textfield += memoryNum + "/";
+				text.setText(textfield);
+				operators.add(memoryNum);
+				operators.add("/");
+				tempNumber = "";
+			}
+		}
 		else if(event.getSource() == equals){
 			if(numbers.get(0) == null){               // .get used to retrieve index
 			}
 			else{
 				numbers.add(tempNumber);
 				operators.add(tempNumber);
-				System.out.println(numbers + "\t" + operators);
-				textfield = "Answer will be here";
+				System.out.println(numbers + "\t" + operators);                // testing --------------------
 				text.setText(textfield);
 				String expression = "";
 				for(int index = 0; index < operators.size(); index++){
@@ -334,16 +459,17 @@ public class Calculator implements ActionListener{
 				}
 				System.out.println(expression);          // for testing purposes
 				try {
-					String ans = calculation(expression);
-					Double test = Double.parseDouble(ans);;
-					System.out.println(test);
-					textfield = ans;               
+					answerString = calculation(expression);
+					textfield = answerString;
+					text.setText(textfield);
+					Double test = Double.parseDouble(answerString);;
+					System.out.println(test);   // get rid         // testing --------------------
 				} catch (ScriptException e){
 					e.printStackTrace();
 				}
 				// Reset everything
 				tempNumber = "";
-				numbers.clear();             // clearing the arraylists
+				numbers.clear();                // clearing the arraylists
 				operators.clear();
 				numbers.add(0, null);
 			}
@@ -357,14 +483,6 @@ public class Calculator implements ActionListener{
 		System.out.println(strAnswer);// + "\n" + intAnswer + "\n" + dAnswer);
 		
 		return strAnswer;
-		 
-		 
-		 
-		 
-		/*ScriptEngineManager mgr = new ScriptEngineManager();             // Didnt work  
-	    ScriptEngine engine = mgr.getEngineByName("JavaScript");        
-	    return ((Double) engine.eval(input));*/
-	    //return new BigDecimal(engine.eval(input).toString()).intValueExact();
 	}
 }
 
@@ -373,6 +491,7 @@ public class Calculator implements ActionListener{
  * use an array like a stack to push and pop values
  * parse int string to suit
  * if statement to change operators
+ * if last button pressed was =
  * using 2 arraylists
  * Try beanshell
  */
