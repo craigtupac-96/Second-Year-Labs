@@ -101,61 +101,77 @@ public class CurrencyConverter implements ActionListener{
 	     JOptionPane.showMessageDialog(null,"Input must be a number.");
         }
         if(option1.equals("Euro")){
+         	euro = 1;
         	dollar = 1.06;
-        	pound = 0.85;
-        	dirham = 3.90;
-        	if(option2.equals("US Dollar")){
-        		resultValue = inputValue * dollar;
-        	}
-        	if(option2.equals("British Pound")){
-        		resultValue = inputValue * pound;
-        	}
-        	if(option2.equals("UAE Dirham")){
-        		resultValue = inputValue * dirham;
-        	}
-        } // end euro
-        if(option1.equals("US Dollar")){
-        	euro = 0.94;
-        	pound = 0.80;
-        	dirham = 3.67;
-        	if(option2.equals("Euro")){
-        		resultValue = inputValue * dollar;
-        	}
-        	if(option2.equals("British Pound")){
-        		resultValue = inputValue * pound;
-        	}
-        	if(option2.equals("UAE Dirham")){
-        		resultValue = inputValue * dirham;
-        	}
+         	pound = 0.85;
+         	dirham = 3.90;
+         	if(option2.equals("US Dollar")){
+         		resultValue = inputValue * dollar;
+         	}
+         	if(option2.equals("Euro")){
+         		resultValue = inputValue * euro;
+         	}
+         	if(option2.equals("British Pound")){
+         		resultValue = inputValue * pound;
+         	}
+         	if(option2.equals("UAE Dirham")){
+         		resultValue = inputValue * dirham;
+         	}
+         } // end euro
+         if(option1.equals("US Dollar")){
+         	euro = 0.94;
+         	dollar = 1;
+         	pound = 0.80;
+         	dirham = 3.67;
+         	if(option2.equals("Euro")){
+         		resultValue = inputValue * dollar;
+         	}
+         	if(option2.equals("US Dollar")){
+         		resultValue = inputValue * dollar;
+         	}
+         	if(option2.equals("British Pound")){
+         		resultValue = inputValue * pound;
+         	}
+         	if(option2.equals("UAE Dirham")){
+         		resultValue = inputValue * dirham;
+         	}
         } // end dollar
         if(option1.equals("British Pound")){
-        	dollar = 1.25;
-        	euro = 1.18;
-        	dirham = 4.60;
-        	if(option2.equals("US Dollar")){
-        		resultValue = inputValue * dollar;
-        	}
-        	if(option2.equals("Euro")){
-        		resultValue = inputValue * pound;
-        	}
-        	if(option2.equals("UAE Dirham")){
-        		resultValue = inputValue * dirham;
-        	}
-        } // end pound
-        if(option1.equals("UAE Dirham")){
-        	dollar = 0.27;
-        	pound = 0.22;
-        	euro = 0.26;
-        	if(option2.equals("US Dollar")){
-        		resultValue = inputValue * dollar;
-        	}
-        	if(option2.equals("British Pound")){
-        		resultValue = inputValue * pound;
-        	}
-        	if(option2.equals("Euro")){
-        		resultValue = inputValue * dirham;
-        	}
-        } // end dirham
+          	dollar = 1.25;
+          	euro = 1.18;
+          	pound = 1;
+          	dirham = 4.60;
+          	if(option2.equals("US Dollar")){
+          		resultValue = inputValue * dollar;
+          	}
+          	if(option2.equals("Euro")){
+          		resultValue = inputValue * pound;
+          	}
+          	if(option2.equals("British Pound")){
+          		resultValue = inputValue * pound;
+          	}
+          	if(option2.equals("UAE Dirham")){
+          		resultValue = inputValue * dirham;
+          	}
+         } // end pound
+         if(option1.equals("UAE Dirham")){
+          	dollar = 0.27;
+          	pound = 0.22;
+          	euro = 0.26;
+          	dirham = 1;
+          	if(option2.equals("US Dollar")){
+          		resultValue = inputValue * dollar;
+          	}
+          	if(option2.equals("British Pound")){
+          		resultValue = inputValue * pound;
+          	}
+          	if(option2.equals("Euro")){
+          		resultValue = inputValue * dirham;
+          	}
+          	if(option2.equals("UAE Dirham")){
+          		resultValue = inputValue * dirham;
+          	}
+          } // end dirham
         DecimalFormat decPlaces = new DecimalFormat("#.##"); // to format doubles to 2 decimal places
     	resultText.setText(String.valueOf(decPlaces.format(resultValue)));
 	} // end actionListener
