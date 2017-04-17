@@ -1,8 +1,7 @@
 /*
  * Author: Craig Lawlor
- * C00184465
  */
-package Lab14;
+package calculator;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -15,7 +14,12 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
-
+/**
+ * 
+ * @author Craig Lawlor
+ * @version 1.0
+ * 
+ */
 public class Calculator implements ActionListener{
 	JTextField text = new JTextField();
 	JTextField mem = new JTextField();
@@ -27,9 +31,12 @@ public class Calculator implements ActionListener{
 	String memoryNum = "";
 	int dotCount = 0;
 	boolean answerBool;
+	boolean memoryOnOff;              // using memoryOnOff to set when the memory buttons can and can't be used
 	ArrayList<String> numbers = new ArrayList<String>();
 	ArrayList<String> operators = new ArrayList<String>();
-	// Constructor
+	/**
+	 * This is the default constructor. When the object is created all of the buttons are set in place with action listeners
+	 */
 	public Calculator(){
 		JFrame frame = new JFrame("Calculator");
 		numbers.add(0, null);                       // initializing the arraylist
@@ -223,7 +230,9 @@ public class Calculator implements ActionListener{
 		frame.getContentPane().setLayout(null);
 		frame.setVisible(true);
 	}
-	
+	/**
+	 * @param event - is the button that is pressed.Depending on which button is pressed one of the following if then else statements will be carried out
+	 */
 	public void actionPerformed(ActionEvent event){
 		// This if statement will clear the textfield if any of these buttons are pressed after an answer 
 		if(event.getSource() == one && answerBool || event.getSource() == two && answerBool || event.getSource() == three && answerBool || 
@@ -246,60 +255,87 @@ public class Calculator implements ActionListener{
 			text.setText(textfield);
 			tempNumber += "1";
 			answerBool = false;
+			memoryOnOff = false;
 		}
 		else if(event.getSource() == two){
 			textfield += "2";
 			text.setText(textfield);
 			tempNumber += "2";
 			answerBool = false;
+			memoryOnOff = false;
 		}
 		else if(event.getSource() == three){
 			textfield += "3";
 			text.setText(textfield);
 			tempNumber += "3";
+			answerBool = false;
+			memoryOnOff = false;
 		}
 		else if(event.getSource() == four){
 			textfield += "4";
 			text.setText(textfield);
 			tempNumber += "4";
+			answerBool = false;
+			memoryOnOff = false;
 		}
 		else if(event.getSource() == five){
 			textfield += "5";
 			text.setText(textfield);
 			tempNumber += "5";
+			answerBool = false;
+			memoryOnOff = false;
 		}
 		else if(event.getSource() == six){
 			textfield += "6";
 			text.setText(textfield);
 			tempNumber += "6";
+			answerBool = false;
+			memoryOnOff = false;
 		}
 		else if(event.getSource() == seven){
 			textfield += "7";
 			text.setText(textfield);
 			tempNumber += "7";
+			answerBool = false;
+			memoryOnOff = false;
 		}
 		else if(event.getSource() == eight){
 			textfield += "8";
 			text.setText(textfield);
 			tempNumber += "8";
+			answerBool = false;
+			memoryOnOff = false;
 		}
 		else if(event.getSource() == nine){
 			textfield += "9";
 			text.setText(textfield);
 			tempNumber += "9";
+			answerBool = false;
+			memoryOnOff = false;
 		}
 		else if(event.getSource() == zero){
 			textfield += "0";
 			text.setText(textfield);
 			tempNumber += "0";
+			answerBool = false;
+			memoryOnOff = false;
 		}
 		else if(event.getSource() == dot){
-			dotCount++;
+			dotCount++;                        // Using 1 and 0 rather than boolean for some variety
 			if(dotCount == 1){
-				textfield += ".";
-				text.setText(textfield);
-				tempNumber += ".";
+				if(tempNumber == ""){          // This if statement adds a 0 before the dot if no number is pressed before it
+					textfield += "0.";
+					text.setText(textfield);
+					tempNumber += "0.";
+				}
+				else{
+					textfield += ".";
+					text.setText(textfield);
+					tempNumber += ".";
+				}
 			}
+			answerBool = false;
+			memoryOnOff = false;
 		}
 		// Non Number Buttons
 		else if(event.getSource() == clear){
@@ -310,6 +346,8 @@ public class Calculator implements ActionListener{
 			operators.clear();
 			numbers.add(0, null);
 			dotCount = 0;
+			answerBool = false;
+			memoryOnOff = true;
 		}
 		else if(event.getSource() == plus && tempNumber != ""){
 			if(numbers.get(0) == null){               // .get used to retrieve index
@@ -321,6 +359,7 @@ public class Calculator implements ActionListener{
 				operators.add("+");
 				tempNumber = "";
 				dotCount = 0;              // CLearing the dot count so the next number can contain a decimal
+				memoryOnOff = true;
 			}
 			else{
 				numbers.add(tempNumber);
@@ -330,6 +369,7 @@ public class Calculator implements ActionListener{
 				operators.add("+");
 				tempNumber = "";
 				dotCount = 0;              // CLearing the dot count so the next number can contain a decimal
+				memoryOnOff = true;
 			}
 		}
 		else if(event.getSource() == minus && tempNumber != ""){  
@@ -342,6 +382,7 @@ public class Calculator implements ActionListener{
 				operators.add("-");
 				tempNumber = "";
 				dotCount = 0;              // CLearing the dot count so the next number can contain a decimal
+				memoryOnOff = true;
 			}
 			else{
 				numbers.add(tempNumber);
@@ -351,6 +392,7 @@ public class Calculator implements ActionListener{
 				operators.add("-");
 				tempNumber = "";
 				dotCount = 0;              // CLearing the dot count so the next number can contain a decimal
+				memoryOnOff = true;
 			}
 		}
 		else if(event.getSource() == mult && tempNumber != ""){
@@ -363,6 +405,7 @@ public class Calculator implements ActionListener{
 				operators.add("*");
 				tempNumber = "";
 				dotCount = 0;              // CLearing the dot count so the next number can contain a decimal
+				memoryOnOff = true;
 			}
 			else{
 				numbers.add(tempNumber);
@@ -372,6 +415,7 @@ public class Calculator implements ActionListener{
 				operators.add("*");
 				tempNumber = "";
 				dotCount = 0;              // CLearing the dot count so the next number can contain a decimal
+				memoryOnOff = true;
 			}
 		}
 		else if(event.getSource() == div && tempNumber != ""){
@@ -384,6 +428,7 @@ public class Calculator implements ActionListener{
 				operators.add("/");
 				tempNumber = "";
 				dotCount = 0;              // CLearing the dot count so the next number can contain a decimal
+				memoryOnOff = true;
 			}
 			else{
 				numbers.add(tempNumber);
@@ -393,6 +438,7 @@ public class Calculator implements ActionListener{
 				operators.add("/");
 				tempNumber = "";
 				dotCount = 0;              // CLearing the dot count so the next number can contain a decimal
+				memoryOnOff = true;
 			}
 		}
 		else if(event.getSource() == memory && memoryNum == ""){    // The memory button
@@ -407,13 +453,15 @@ public class Calculator implements ActionListener{
 			}
 			mem.setText(memoryNum);
 			dotCount = 0;              // CLearing the dot count so the next number can contain a decimal	
+			answerBool = false;
+			memoryOnOff = true;
 		}
 		else if(event.getSource() == mClear){         // Clear the memory
 				memoryNum = "";
 				mem.setText("");
 				dotCount = 0;              // CLearing the dot count so the next number can contain a decimal
 		}
-		else if(event.getSource() == mPlus &&  memoryNum != ""){                        // memory plus 
+		else if(event.getSource() == mPlus &&  memoryNum != "" && memoryOnOff == true){                        // memory plus 
 			if(numbers.get(0) == null){               // .get used to retrieve index
 				numbers.remove(0);
 				numbers.add(0, memoryNum);
@@ -433,8 +481,9 @@ public class Calculator implements ActionListener{
 				tempNumber = "";
 				dotCount = 0;              // CLearing the dot count so the next number can contain a decimal
 			}
+			answerBool = false;
 		}
-		else if(event.getSource() == mMin &&  memoryNum != ""){                        // memory minus
+		else if(event.getSource() == mMin &&  memoryNum != ""  && memoryOnOff == true){                        // memory minus
 			if(numbers.get(0) == null){               // .get used to retrieve index
 				numbers.remove(0);
 				numbers.add(0, memoryNum);
@@ -454,29 +503,31 @@ public class Calculator implements ActionListener{
 				tempNumber = "";
 				dotCount = 0;              // CLearing the dot count so the next number can contain a decimal
 			}
+			answerBool = false;
 		}
-		else if(event.getSource() == mMult &&  memoryNum != ""){                        // memory mult
-				if(numbers.get(0) == null){               // .get used to retrieve index
-					numbers.remove(0);
-					numbers.add(0, memoryNum);
-					textfield += memoryNum + "*";
-					text.setText(textfield);
-					operators.add(0, memoryNum);
-					operators.add("*");
-					tempNumber = "";
-					dotCount = 0;              // CLearing the dot count so the next number can contain a decimal
-				}
-				else{
-					numbers.add(memoryNum);
-					textfield += memoryNum + "*";
-					text.setText(textfield);
-					operators.add(memoryNum);
-					operators.add("*");
-					tempNumber = "";
-					dotCount = 0;              // CLearing the dot count so the next number can contain a decimal
-				}
+		else if(event.getSource() == mMult &&  memoryNum != ""  && memoryOnOff == true){                        // memory mult
+			if(numbers.get(0) == null){               // .get used to retrieve index
+				numbers.remove(0);
+				numbers.add(0, memoryNum);
+				textfield += memoryNum + "*";
+				text.setText(textfield);
+				operators.add(0, memoryNum);
+				operators.add("*");
+				tempNumber = "";
+				dotCount = 0;              // CLearing the dot count so the next number can contain a decimal
+			}
+			else{
+				numbers.add(memoryNum);
+				textfield += memoryNum + "*";
+				text.setText(textfield);
+				operators.add(memoryNum);
+				operators.add("*");
+				tempNumber = "";
+				dotCount = 0;              // CLearing the dot count so the next number can contain a decimal
+			}
+			answerBool = false;
 		}
-		else if(event.getSource() == mDiv &&  memoryNum != ""){                        // memory divide
+		else if(event.getSource() == mDiv &&  memoryNum != ""  && memoryOnOff == true){                        // memory divide
 			if(numbers.get(0) == null){               // .get used to retrieve index
 				numbers.remove(0);
 				numbers.add(0, memoryNum);
@@ -494,68 +545,59 @@ public class Calculator implements ActionListener{
 				operators.add(memoryNum);
 				operators.add("/");
 				tempNumber = "";
-				dotCount = 0;              // CLearing the dot count so the next number can contain a decimal
+				dotCount = 0;              // Clearing the dot count so the next number can contain a decimal
 			}
+			answerBool = false;
 		}
 		
 		else if(event.getSource() == equals && tempNumber != ""){          // wont allow equals if the last button was an operator
-					if(numbers.get(0) == null){               // .get used to retrieve index
+			if(numbers.get(0) == null){               // .get used to retrieve index
+			}
+			else{
+				numbers.add(tempNumber);
+				operators.add(tempNumber);
+				text.setText(textfield);
+				String expression = "";             // clearing the expression to be calculated before the string is sent to the engine
+				for(int index = 0; index < operators.size(); index++){
+					expression += operators.get(index);
+				}
+				try {
+					answerString = calculation(expression);     // This calls the method calculation and returns the answer as a string
+					if(answerString.equals("Infinity")){
+						textfield = "You can't divide by zero";
+						text.setText(textfield);
 					}
 					else{
-						numbers.add(tempNumber);
-						operators.add(tempNumber);
+						textfield = answerString;
 						text.setText(textfield);
-						String expression = "";             // clearing the expression to be calculated before the string is sent to the engine
-						for(int index = 0; index < operators.size(); index++){
-							expression += operators.get(index);
-						}
-						try {
-							answerString = calculation(expression);     // This calls the method calculation and returns the answer as a string
-							if(answerString.equals("Infinity")){
-								textfield = "You can't divide by zero";
-								text.setText(textfield);
-							}
-							else{
-								textfield = answerString;
-								text.setText(textfield);
-							}
-						} catch (ScriptException e){
-							e.printStackTrace();
-						}
-						// Reset everything
-						tempNumber = "";
-						numbers.clear();                // clearing the arraylists
-						operators.clear();
-						numbers.add(0, null);
-						dotCount = 0;              // CLearing the dot count so the next number can contain a decimal
-						answerBool = true;
 					}
+				} 
+				catch (ScriptException e){
+					e.printStackTrace();
+				}
+				// Reset everything
+				tempNumber = "";
+				numbers.clear();                // clearing the arraylists
+				operators.clear();
+				numbers.add(0, null);
+				dotCount = 0;              
+				answerBool = true;
+				memoryOnOff = true;
+			}
 		}
 	} // end actionPerformed
-	
+	/**
+	 * 
+	 * @param input - The input to this method is a String, It holds the entire statement to be carried out.
+	 * @return strAnswer - This method returns a String result after the calculation is carried out
+	 * @throws ScriptException - If there is an error with the calculation the exception will be caught. 
+	 * First it will try to output the answer. There will also be an if statement to see if the user divided by zero
+	 */
 	public String calculation(String input) throws ScriptException {
 		ScriptEngine engine = new ScriptEngineManager().getEngineByExtension("js");
 		Object result = engine.eval(input);
 		String strAnswer = result.toString();            // holds the string representation of the object
-		System.out.println(strAnswer);// + "\n" + intAnswer + "\n" + dAnswer);           // testing ------------------
 		
 		return strAnswer;
 	}
 }
-
-/********************************
- * Add decimal later
- * 
- * parse int string to suit
- * if statement to change operators
- * 
- * if last button pressed was =     use bool     (second action listener)
- * if last button was operator
- * 
- * using 2 arraylists
- * 
- */
-//Double test = Double.parseDouble(answerString);;
-//System.out.println(test);   // get rid         // testing --------------------
-//System.out.println(expression);          // for testing purposes
-//System.out.println(numbers + "\t" + operators);                // testing --------------------
